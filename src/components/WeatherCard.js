@@ -1,79 +1,80 @@
-import React from "react";
-import "./WeatherCard.css"
+import React, { useState, useEffect } from "react";
+import "./WeatherCard.css";
 
+// Will use Openweather API
 // https://api.openweathermap.org/data/2.5/weather?q=africa&appid=fc665790184e1daf240550642acc635f
 
-const getDate = () => {
-  let date = new Date();
-  return date.toDateString();
-}
+function WeatherCard(props) {
+  // State to update city
+  const [country, setCountry] = useState("africa");
 
-function WeatherCard() {
-  const api = {
-    coord: {
-      lon: 21.0938,
-      lat: 7.1881,
-    },
-    weather: [
-      {
-        id: 500,
-        main: "Rain",
-        description: "light rain",
-        icon: "10d",
-      },
-    ],
-    base: "stations",
-    main: {
-      temp: 301.22,
-      feels_like: 304.23,
-      temp_min: 301.22,
-      temp_max: 301.22,
-      pressure: 1008,
-      humidity: 72,
-      sea_level: 1008,
-      grnd_level: 944,
-    },
-    visibility: 10000,
-    wind: {
-      speed: 0.71,
-      deg: 153,
-      gust: 1.39,
-    },
-    rain: {
-      "1h": 0.57,
-    },
-    clouds: {
-      all: 89,
-    },
-    dt: 1633443483,
-    sys: {
-      sunrise: 1633407778,
-      sunset: 1633451091,
-    },
-    timezone: 3600,
-    id: 6255146,
-    name: "Africa",
-    cod: 200,
+  // state to get weather data
+  const [weatherData, setWeatherData] = useState({
+    name: null,
+    temp: null,
+    condition: null,
+  });
+
+  // It will get data after components are render properly
+  useEffect(() => {
+    const getWeatherData = async () => {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${country}&appid=fc665790184e1daf240550642acc635f`;
+      const respone = await fetch(url);
+      const data = await respone.json();
+      setWeatherData({
+        name: data.name,
+        temp: data.main.temp,
+        condition: data.weather[0].main,
+      });
+    };
+    getWeatherData();
+  }, [country]); // Country as a key when country will change it will re render the card component
+
+  // we get temperature in frenhite we have to covert it to celcious
+  const getTemperature = () => {
+    return Math.floor(weatherData.temp - 273.15);
   };
 
-  const getTemperature = () => {
-      let num = api.main.temp;
-      return Math.floor(num - 273.15)
-  }
+  // This gets a date in proper formate
+  const getDate = () => {
+    let date = new Date();
+    return date.toDateString();
+  };
+
+  // function to change country
+  const changeCountry = (newCountry) => {
+    setCountry(newCountry);
+  };
+
+  // Function to get id of a particular card so we can update each card individually
+  const getNewCountryValue = () => {
+    return document.getElementById(props.id).value;
+  };
+
   return (
-      <div className="weatherCard">
-        <div class="inputField">
-          <input type="text"/>
-          <button>Go</button>
-        </div>
-        <h4 className="temp">{getTemperature()}&#8451;</h4>
-        <div className="info">
-          <p>{getDate()}</p>
-          <hr />
-          <p>{api.weather[0].main}</p>
-        </div>
-        
+    <div className="weatherCard">
+      <div className="deleteCard">
+        <button id="deleteBtn" onClick={() => props.removeCard(props.id)}>
+          ×
+        </button>
       </div>
+      <div className="inputField">
+        <input
+          className="newCountry"
+          id={props.id}
+          type="text"
+          placeholder="City Name"
+        />
+        <button onClick={() => changeCountry(getNewCountryValue())}>Go</button>
+      </div>
+      <h5 className="location">{weatherData.name}</h5>
+      <h4 className="temp">{getTemperature()}&#8451;</h4>
+      <div className="info">
+        <p>{getDate()}</p>
+        <hr />
+        <p>{weatherData.condition}</p>
+      </div>
+    </div>
   );
 }
 

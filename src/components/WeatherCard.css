@@ -1,59 +1,94 @@
 .weatherCard {
-    font-family: cursive;
-    display: flex;
-    flex-direction: column;
-    width: 150px;
-    height: 290px;
-    padding: 15px 10px;
-    align-items: center;
-    background-image: url(mountain.png); 
-    background-size: cover;
-    box-shadow: 4px 4px 25px 0px black;
-    margin: 2rem;
+  font-family: cursive;
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+  height: 350px;
+  padding: 15px 20px;
+  align-items: center;
+  background-image: url(mountain.png);
+  background-size: cover;
+  box-shadow: 4px 4px 25px 0px black;
+  margin: 2rem;
+  transition: all 0.3s;
 }
 
-hr{
-    border: 1px dotted black;
+.weatherCard:hover {
+  transform: scale(1.1);
+  box-shadow: 4px 4px 35px 0px black;
 }
 
-.temp{
-    font-size: 1.3rem;
-    margin-top: 20px;
-    margin-bottom: 5rem;
+.location {
+  margin-top: 10px;
+}
+
+hr {
+  border: 1px dotted black;
+}
+
+.temp {
+  font-size: 1.9rem;
+  margin-top: 10px;
+  margin-bottom: 5rem;
 }
 
 .info {
-    font-size: 13px;
-    text-align: center;
+  font-size: 13px;
+  text-align: center;
 }
 
 .info p {
-    padding: 8px;
+  padding: 8px;
 }
 
 .inputField {
-    margin-top: 5px;
+  margin-top: 5px;
 }
+
+.newCountry::placeholder {
+  color: black;
+  opacity: 0.3;
+}
+
 .inputField input {
-    font-family: cursive;
-    font-weight: bold;
-    width: 100px;
-    margin-top: 5px;
-    background-color: transparent;
-    outline: none;
-    border: 1px solid black;
-    border-radius: 5px;
+  font-family: cursive;
+  font-weight: bold;
+  width: 100px;
+  margin-top: 5px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .inputField button {
-    font-family: cursive;
-    font-weight: bold;
-    margin: 0 3px;
-    width: 33px;
-    height: 22px;
-    border: 0px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: transparent;
-    border: 1px solid black;
+  font-family: cursive;
+  font-weight: bold;
+  margin: 0 3px;
+  width: 33px;
+  height: 22px;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid black;
+}
+
+.deleteCard {
+  position: absolute;
+}
+
+#deleteBtn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.3rem;
+  position: relative;
+  top: -12px;
+  right: -100px;
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+#deleteBtn:hover {
+  opacity: 1;
 }
